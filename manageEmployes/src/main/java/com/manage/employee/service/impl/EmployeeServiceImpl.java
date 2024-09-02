@@ -7,6 +7,7 @@ import com.manage.employee.mapper.EmployeeMapper;
 import com.manage.employee.repository.EmployeeRepository;
 import com.manage.employee.service.EmployeeService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,10 +51,19 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employeeToUpdate = employeeRepository.findById(employeeId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Employee is not found with id" + employeeId));
-        Employee employee = EmployeeMapper.mapToEmployee(employeeDto);
-        employeeToUpdate = employeeRepository.save(employee);
+        employeeToUpdate.setFirstName(employeeDto.getFirstName());
+        employeeToUpdate.setLastName(employeeDto.getLastName());
+        employeeToUpdate.setEmail(employeeDto.getEmail());
+        employeeRepository.save(employeeToUpdate);
 
         return EmployeeMapper.mapToEmployeeDto(employeeToUpdate);
+    }
+
+    @Override
+    public HttpStatus deleteEmployee(Long employeeId)
+    {
+        employeeRepository.deleteById(employeeId);
+        return HttpStatus.OK;
     }
 
 }

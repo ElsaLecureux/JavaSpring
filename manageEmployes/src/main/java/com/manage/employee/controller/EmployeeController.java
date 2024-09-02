@@ -38,11 +38,18 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeListDto);
     }
 
-    @PutMapping("api/updateEmployee/{id}")
+    @PutMapping("{id}")
     public ResponseEntity updateEmployee(@PathVariable("id") Long employeeId ,@RequestBody EmployeeDto employeeDto)
     {
         EmployeeDto updatedEmployeeDto = employeeService.updateEmployee(employeeId, employeeDto);
         return ResponseEntity.ok(updatedEmployeeDto);
+    }
+
+    @DeleteMapping("{id}")
+    public HttpStatus deleteEmployee(@PathVariable("id")Long employeeId)
+    {
+        HttpStatus status = employeeService.deleteEmployee(employeeId);
+        return status ;
     }
 
 }
