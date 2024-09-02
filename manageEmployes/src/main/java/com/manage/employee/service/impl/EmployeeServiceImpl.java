@@ -9,6 +9,8 @@ import com.manage.employee.service.EmployeeService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 
@@ -33,4 +35,25 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         return EmployeeMapper.mapToEmployeeDto(employee);
     }
+    
+    @Override
+    public List<EmployeeDto> getAllEmployees()
+    {
+            List<Employee> employeeList = employeeRepository.findAll();
+
+        return EmployeeMapper.mapToEmployeeListDto(employeeList);
+    }
+
+    @Override
+    public EmployeeDto updateEmployee(Long employeeId, EmployeeDto employeeDto)
+    {
+        Employee employeeToUpdate = employeeRepository.findById(employeeId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Employee is not found with id" + employeeId));
+        Employee employee = EmployeeMapper.mapToEmployee(employeeDto);
+        employeeToUpdate = employeeRepository.save(employee);
+
+        return EmployeeMapper.mapToEmployeeDto(employeeToUpdate);
+    }
+
 }

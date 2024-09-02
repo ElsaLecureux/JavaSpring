@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin("*")
 @RestController
 @AllArgsConstructor
@@ -27,6 +29,20 @@ public class EmployeeController {
     {
         EmployeeDto employeeDto = employeeService.getEmployeeById(employeeId);
         return ResponseEntity.ok(employeeDto);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<EmployeeDto>> getAllEmployees()
+    {
+        List<EmployeeDto> employeeListDto = employeeService.getAllEmployees();
+        return ResponseEntity.ok(employeeListDto);
+    }
+
+    @PutMapping("api/updateEmployee/{id}")
+    public ResponseEntity updateEmployee(@PathVariable("id") Long employeeId ,@RequestBody EmployeeDto employeeDto)
+    {
+        EmployeeDto updatedEmployeeDto = employeeService.updateEmployee(employeeId, employeeDto);
+        return ResponseEntity.ok(updatedEmployeeDto);
     }
 
 }
