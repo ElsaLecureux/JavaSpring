@@ -1,0 +1,41 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height:100vh;
+}
+
+.header {
+  background-color: #000000;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  min-height: 10vh;
+}
+
+.navBar {
+  display: flex;
+}
+
+.appTitle {
+  padding: 1rem;
+}
+
+.navItem {
+  font-size: 1.2rem;
+  padding: 1rem;
+  list-style-type: none;
+}
+
+.link {
+  text-decoration: none;
+  color: #fff;
+}
+
+.footer {
+  background-color: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  min-height: 5vh;
+}

@@ -1,0 +1,33 @@
+.employeesPageContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow:1;
+    padding: 2rem 20rem;
+}
+
+.buttonContainer{
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 2rem 0;
+}
+
+
+.addButton{
+    padding: 8px;
+    border-radius: 8%;
+    border: none;
+    background-color: rgb(122, 122, 240);
+    color: #fff;
+}
+
+.employeesTable {
+    width: 100%;
+    border: 2px solid rgb(140 140 140);
+}
+
+.tableValues, .tableTitles {
+    border: 1px solid rgb(160 160 160);
+    padding: 8px 10px
+}
