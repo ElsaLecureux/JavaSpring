@@ -1,7 +1,12 @@
 package com.manage.employee.mapper;
 
 import com.manage.employee.dto.DepartmentDto;
+import com.manage.employee.dto.EmployeeDto;
 import com.manage.employee.entity.Department;
+import com.manage.employee.entity.Employee;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DepartmentMapper {
 
@@ -19,7 +24,17 @@ public class DepartmentMapper {
         Department department = new Department();
         department.setId(departmentDto.getId());
         department.setDepartmentName(departmentDto.getDepartmentName());
-        department.setDepartmentDescription(department.getDepartmentDescription());
+        department.setDepartmentDescription(departmentDto.getDepartmentDescription());
         return department;
+    }
+
+    public static List<DepartmentDto> mapToDepartmentListDto(List<Department> departmentList)
+    {
+        List<DepartmentDto> DepartmentListDto = new ArrayList();
+        for (Department department: departmentList
+        ) {
+            DepartmentListDto.add(mapToDepartmentDto(department));
+        }
+        return DepartmentListDto;
     }
 }

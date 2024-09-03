@@ -48,8 +48,7 @@ public class EmployeeController {
     @DeleteMapping("{id}")
     public HttpStatus deleteEmployee(@PathVariable("id")Long employeeId)
     {
-        HttpStatus status = employeeService.deleteEmployee(employeeId);
-        return status;
+        return employeeService.deleteEmployee(employeeId);
     }
 
 }
