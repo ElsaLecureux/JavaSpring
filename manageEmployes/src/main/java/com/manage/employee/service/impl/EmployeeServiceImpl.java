@@ -1,9 +1,11 @@
 package com.manage.employee.service.impl;
 
 import com.manage.employee.dto.EmployeeDto;
+import com.manage.employee.entity.Department;
 import com.manage.employee.entity.Employee;
 import com.manage.employee.exception.ResourceNotFoundException;
 import com.manage.employee.mapper.EmployeeMapper;
+import com.manage.employee.repository.DepartmentRepository;
 import com.manage.employee.repository.EmployeeRepository;
 import com.manage.employee.service.EmployeeService;
 import lombok.AllArgsConstructor;
@@ -18,11 +20,16 @@ import java.util.List;
 public class EmployeeServiceImpl implements EmployeeService {
 
     private EmployeeRepository employeeRepository;
+    private DepartmentRepository departmentRepository;
 
     @Override
     public EmployeeDto createEmployee(EmployeeDto employeeDto)
     {
         Employee employee = EmployeeMapper.mapToEmployee(employeeDto);
+        Department department = departmentRepository.findById(employeeDto.getDepartmentId())
+            .orElseThrow(() ->
+                new ResourceNotFoundException("Department does not exists with id: " + employeeDto.getDepartmentId()));
+        employee.setDepartment(department);
         Employee savedEmployee = employeeRepository.save(employee);
         return EmployeeMapper.mapToEmployeeDto(savedEmployee);
     }

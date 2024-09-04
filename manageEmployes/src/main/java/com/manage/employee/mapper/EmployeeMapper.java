@@ -2,6 +2,7 @@ package com.manage.employee.mapper;
 
 import com.manage.employee.dto.DepartmentDto;
 import com.manage.employee.dto.EmployeeDto;
+import com.manage.employee.entity.Department;
 import com.manage.employee.entity.Employee;
 
 import java.util.ArrayList;
@@ -27,7 +28,6 @@ public class EmployeeMapper {
         employee.setFirstName(employeeDto.getFirstName());
         employee.setLastName(employeeDto.getLastName());
         employee.setEmail(employeeDto.getEmail());
-        employee.getDepartment().setId(departmentDto.getId());;
         return employee;
     }
 

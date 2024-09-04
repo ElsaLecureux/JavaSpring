@@ -1,5 +1,7 @@
 package com.manage.employee.dto;
 
+import com.manage.employee.entity.Department;
+import jakarta.persistence.ForeignKey;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,5 +17,5 @@ public class EmployeeDto {
     private String firstName;
     private String lastName;
     private String email;
-    private Long department_id;
+    private Long departmentId;
 }

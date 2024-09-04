@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -58,10 +59,14 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public HttpStatus deleteDepartment(Long departmentId)
     {
-        departmentRepository.findById(departmentId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Employee is not found with id" + departmentId));
-        departmentRepository.deleteById(departmentId);
-        return HttpStatus.OK;
+        if(departmentRepository.findAll().isEmpty()) {
+            departmentRepository.findById(departmentId)
+                    .orElseThrow(() ->
+                            new ResourceNotFoundException("Employee is not found with id" + departmentId));
+            departmentRepository.deleteById(departmentId);
+            return HttpStatus.OK;
+        } else {
+            return HttpStatus.FORBIDDEN;
+        }
     }
 }
