@@ -1,7 +1,7 @@
 function AddUpdateDepartmentPage () {
     return (
-        <div>
-
+        <div className="PageContainer">
+            Update or Add department        
         </div>
     )
 }

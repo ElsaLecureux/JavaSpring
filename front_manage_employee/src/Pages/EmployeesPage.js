@@ -1,16 +1,45 @@
+import DeleteModal from './DeleteModal';
 import './EmployeesPage.css';
-import { Link, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function EmployeesPage () {
 
+    const baseURL = 'http://localhost:8080/api/employees';
+
+    const [showModal, setShowModal] = useState(false);
+
+    async function getEmployees() {
+        try {
+            const response = await axios.get(`${baseURL}`);
+            console.log('done', response);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    useEffect(()=>{
+        console.log("inside useEffect")
+        getEmployees();
+    }, [])
+    
     const navigate = useNavigate();
+    function navigateToAddUpdatePage () {
+        navigate("/addUpdateEmployee")
+    }
+
+    function openDeleteModal () {
+        setShowModal(!showModal);
+    }
+
 
     return (
-        <div className='employeesPageContainer'>
+        <div className='employeesPageContainer PageContainer'>
             <h1>List Of Employees</h1>
             <div className='buttonContainer'>
-                <button className='addButton'>
-                    <Link className='link' to="/addUpdateEmployee">Add Employee</Link>                    
+                <button className='addButton' onClick={() => navigateToAddUpdatePage()}>
+                    Add Employee                 
                 </button>
             </div>
             <table className='employeesTable'>
@@ -48,10 +77,10 @@ function EmployeesPage () {
                             james@mail.com
                         </td>
                         <td className='tableValues actionsContainer'>
-                            <button className='actionButton updateButton' onClick={navigate("/addUpdateEmployee")}>
+                            <button className='actionButton updateButton' onClick={() => navigateToAddUpdatePage()}>
                                 Update
                             </button>
-                            <button className='actionButton deleteButton' onClick={navigate("/deleteEmployee")}>
+                            <button className='actionButton deleteButton' onClick={() => openDeleteModal()}>
                                 Delete
                             </button>
                         </td>
@@ -70,10 +99,10 @@ function EmployeesPage () {
                             t.ung@mail.com
                         </td>
                         <td className='tableValues actionsContainer'>
-                            <button className='actionButton updateButton'>
+                        <button className='actionButton updateButton' onClick={() => navigateToAddUpdatePage()}>
                                 Update
                             </button>
-                            <button className='actionButton deleteButton'>
+                            <button className='actionButton deleteButton' onClick={() => navigateToDeletePage()}>
                                 Delete
                             </button>
                         </td>
@@ -92,16 +121,19 @@ function EmployeesPage () {
                             May-NS@mail.com
                         </td>
                         <td className='tableValues actionsContainer'>
-                            <button className='actionButton updateButton'>
+                        <button className='actionButton updateButton' onClick={() => navigateToAddUpdatePage()}>
                                 Update
                             </button>
-                            <button className='actionButton deleteButton'>
+                            <button className='actionButton deleteButton' onClick={() => navigateToDeletePage()}>
                                 Delete
                             </button>
                         </td>
                     </tr>   
                 </tbody>
             </table>
+            {
+              showModal ? <DeleteModal></DeleteModal> : <div></div>
+            }            
         </div>
     )
 }

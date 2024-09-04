@@ -1,6 +1,6 @@
 function AddUpdateEmployeePage () {
     return (
-        <div>
+        <div className="PageContainer">
             <form>
                 <label>
                     Employee First Name:

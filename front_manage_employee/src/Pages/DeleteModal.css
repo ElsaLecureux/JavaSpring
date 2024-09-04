@@ -1,0 +1,28 @@
+.modalContainer{
+    width: 25vh;
+    height: 25vh;
+    padding: 4rem;
+}
+
+.actionsContainer{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 2rem;
+}
+
+.yesButton{
+    border-radius: 8%;
+    border: none;
+    background-color: rgb(240, 115, 106);
+    color: #fff;
+    padding: 0.3rem;
+}
+
+.noButton{
+    border-radius: 8%;
+    border: none;
+    background-color: rgb(122, 122, 240);
+    color: #fff;
+    padding: 0.3rem;
+}

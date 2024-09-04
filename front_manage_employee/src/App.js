@@ -1,22 +1,25 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Layout from "./Pages/Layout";
-import EmployeesPage from "./Pages/EmployeesPage";
-import DepartmentsPage from "./Pages/DepartmentsPage";
-import AddUpdateEmployeePage from "./Pages/AddUpdateEmployeePage";
-import DeleteEmployeePage from "./Pages/DeletePage";
+import './App.css';
+import { Link, Outlet} from "react-router-dom";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-      <Route path="/" element={<Layout />}>
-          <Route path="/employees" element={<EmployeesPage />} />
-          <Route path="/departments" element={<DepartmentsPage />} />
-          <Route path="/addUpdateEmployee" element={<AddUpdateEmployeePage />} />
-          <Route path="/deleteEmployee" element={<DeleteEmployeePage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <div className="App">
+      <header className='header'>
+          <h2 className='appTitle'>Employee Management System</h2>
+          <nav>
+              <ul className='navBar'>
+                  <li className='navItem'>
+                      <Link className='link' to="/employees">Employees</Link>
+                  </li>
+                  <li className='navItem'>
+                      <Link className='link' to="/departments">Departments</Link>
+                  </li>
+              </ul>
+          </nav>        
+      </header>
+      <Outlet></Outlet>
+      <footer className='footer'>m2i</footer>
+    </div>
   );
 }
 
