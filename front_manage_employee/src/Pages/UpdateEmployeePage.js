@@ -5,12 +5,12 @@ import "./UpdateEmployeePage.css";
 
 const baseURL = 'http://localhost:8080/api/';
 
-export async function action({request}) {
+export async function action({request, params}) {
     const formData = await request.formData();
     console.log('inside action');
     try {
-        const employee = await axios.post(
-            `${baseURL}employees`,
+        const employee = await axios.put(
+            `${baseURL}employees/${params.id}`,
             {
                 "firstName": formData.get("firstName"),
                 "lastName": formData.get("lastName"),
@@ -43,22 +43,23 @@ function UpdateEmployeePage () {
    
     return (
         <div className="PageContainer">
-            <Form method="post">
-                <label>
+            <h1>Update Employee</h1>
+            <Form method="post" className="formEmployee">
+                <label className="label formItem">
                     Employee First Name:
-                    <input type="text" name="firstName" />
+                    <input type="text" name="firstName" className="input"/>
                 </label>
-                <label>
+                <label className="label formItem">
                     Employee Last Name:
-                    <input type="text" name="lastName">
+                    <input type="text" name="lastName" className="input">
                     </input>
                 </label>
-                <label>
+                <label className="label formItem">
                     Employee Email:
-                    <input type="text" name="email">
+                    <input type="text" name="email" className="input">
                     </input>
                 </label>
-                <select name="departmentId">
+                <select name="departmentId" className="formItem select" >
                     Employee Department:
                     <option value="">Choose a department</option>
                     {
@@ -70,7 +71,7 @@ function UpdateEmployeePage () {
                        )
                     }
                 </select>
-                <button type="submit" onClick={console.log('clicked')}>Submit</button>
+                <button type="submit" className="submitButton" onClick={console.log('clicked')}>Submit</button>
             </Form>
         </div>
     )

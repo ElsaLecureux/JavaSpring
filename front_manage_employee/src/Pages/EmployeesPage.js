@@ -28,7 +28,7 @@ function EmployeesPage () {
     const navigate = useNavigate();
 
     function navigateToUpdateEmployee (id) {
-        navigate(`/updateEmployee/:${id}`);
+        navigate(`/updateEmployee/${id}`);
     }
 
     function navigateToAddEmployee () {
