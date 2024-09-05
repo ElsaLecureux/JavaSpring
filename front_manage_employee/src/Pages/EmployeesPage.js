@@ -8,8 +8,9 @@ const baseURL = 'http://localhost:8080/api/employees';
 
 export async function loader() {
     try {
-        const employeesCharged = await axios.get(`${baseURL}`); 
-        return { employeesCharged } ;
+
+        const { data } = await axios.get(`${baseURL}`); 
+        return data ;
     } catch (error) {
         console.error(error);
     }
@@ -17,7 +18,7 @@ export async function loader() {
 
 function EmployeesPage () {
 
-    const { employeesCharged } = useLoaderData();
+    const employeesCharged = useLoaderData();
     
     const [employees, setEmployees] = useState([]);
     const [employee, setEmployee] = useState({});
@@ -25,8 +26,13 @@ function EmployeesPage () {
     const [showModal, setShowModal] = useState(false);    
     
     const navigate = useNavigate();
-    function navigateToAddUpdatePage () {
-        navigate("/addUpdateEmployee")
+
+    function navigateToUpdateEmployee (id) {
+        navigate(`/updateEmployee/:${id}`);
+    }
+
+    function navigateToAddEmployee () {
+        navigate("/addEmployee")
     }
 
     function openDeleteModal (id) {
@@ -35,7 +41,8 @@ function EmployeesPage () {
     }
 
     useEffect(()=> {
-        setEmployees(employeesCharged.data);
+        console.log()
+        setEmployees(employeesCharged);
     },[employeesCharged])
 
 
@@ -43,7 +50,7 @@ function EmployeesPage () {
         <div className='employeesPageContainer PageContainer'>
             <h1>List Of Employees</h1>
             <div className='buttonContainer'>
-                <button className='addButton' onClick={() => navigateToAddUpdatePage()}>
+                <button className='addButton' onClick={() => navigateToAddEmployee()}>
                     Add Employee                 
                 </button>
             </div>
@@ -85,7 +92,7 @@ function EmployeesPage () {
                                         {employee.email}
                                     </td>
                                     <td className='tableValues actionsContainer'>
-                                        <button className='actionButton updateButton' onClick={() => navigateToAddUpdatePage()}>
+                                        <button className='actionButton updateButton' onClick={() => navigateToUpdateEmployee(employee.id)}>
                                             Update
                                         </button>
                                         <button className='actionButton deleteButton' onClick={() => openDeleteModal(employee)}>

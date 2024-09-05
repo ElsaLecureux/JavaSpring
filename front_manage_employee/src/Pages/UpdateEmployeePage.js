@@ -1,29 +1,30 @@
 import { Form } from "react-router-dom";
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import "./UpdateEmployeePage.css";
 
 const baseURL = 'http://localhost:8080/api/';
 
-export async function action() {
-    
+export async function action({request}) {
     const formData = await request.formData();
+    console.log('inside action');
     try {
-        const response = await axios.post(
+        const employee = await axios.post(
             `${baseURL}employees`,
             {
-                firstName: formData.get("firstName"),
-                lastName: formData.get("lastName"),
-                email: formData.get("email"),
-                departmentId: formData.get("departmentId"),
+                "firstName": formData.get("firstName"),
+                "lastName": formData.get("lastName"),
+                "email": formData.get("email"),
+                "departmentId": parseInt(formData.get("departmentId")),
             }
         );
-        console.log(response);
+        return { employee };        
     } catch (error) {
-        
+        console.error(error);
     }
 }
 
-function AddUpdateEmployeePage () {   
+function UpdateEmployeePage () {   
 
     const [departments, setDepartments] = useState([]); 
 
@@ -42,11 +43,10 @@ function AddUpdateEmployeePage () {
    
     return (
         <div className="PageContainer">
-            <Form>
+            <Form method="post">
                 <label>
                     Employee First Name:
-                    <input type="text" name="firstName">
-                    </input>
+                    <input type="text" name="firstName" />
                 </label>
                 <label>
                     Employee Last Name:
@@ -70,10 +70,10 @@ function AddUpdateEmployeePage () {
                        )
                     }
                 </select>
-                <input type="submit"></input>
+                <button type="submit" onClick={console.log('clicked')}>Submit</button>
             </Form>
         </div>
     )
 }
 
-export default AddUpdateEmployeePage;
+export default UpdateEmployeePage;

@@ -12,7 +12,8 @@ import ErrorPage from './Pages/ErrorPage';
 import EmployeesPage, { loader as employeesLoader } from './Pages/EmployeesPage';
 import AddUpdateDepartmentPage from './Pages/AddUpdateDepartment';
 import DepartmentsPage from './Pages/DepartmentsPage';
-import AddUpdateEmployeePage, {action as rootAction} from './Pages/AddUpdateEmployeePage';
+import AddEmployeePage, { action as createAction } from './Pages/AddEmployeePage';
+import UpdateEmployeePage, { action as updateAction } from './Pages/UpdateEmployeePage';
 
 const router = createBrowserRouter([
   {
@@ -34,9 +35,14 @@ const router = createBrowserRouter([
         element: <DepartmentsPage />,
       },
       {
-        path: "/addUpdateEmployee",
-        element: <AddUpdateEmployeePage />,
-        action: rootAction,
+        path: "/addEmployee",
+        element: <AddEmployeePage />,
+        action: createAction,
+      },
+      {
+        path: "/updateEmployee/:id",
+        element: <UpdateEmployeePage />,
+        action: updateAction,
       },
       {
         path: "/addUpdateDepartment",
