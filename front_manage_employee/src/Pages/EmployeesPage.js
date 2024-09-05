@@ -8,8 +8,8 @@ const baseURL = 'http://localhost:8080/api/employees';
 
 export async function loader() {
     try {
-        console.log('inside loader');
-        const employees = await axios.get(`${baseURL}`);  
+        const employees = await axios.get(`${baseURL}`); 
+        console.log('inside loader', employees); 
         return { employees };
     } catch (error) {
         console.error(error);
@@ -36,8 +36,9 @@ function EmployeesPage () {
     }
 
     useEffect(()=> {
+        console.log('inside useEffect',employeesCharged);
         setEmployees(employeesCharged);
-    },[])
+    },[employeesCharged])
 
 
     return (
