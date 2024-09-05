@@ -1,6 +1,6 @@
 import DeleteModal from './DeleteModal';
 import './EmployeesPage.css';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLoaderData } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -8,7 +8,9 @@ const baseURL = 'http://localhost:8080/api/employees';
 
 export async function loader() {
     try {
-        await axios.get(`${baseURL}`);        
+        console.log('inside loader');
+        const employees = await axios.get(`${baseURL}`);  
+        return { employees };
     } catch (error) {
         console.error(error);
     }
