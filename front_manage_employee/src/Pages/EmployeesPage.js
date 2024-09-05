@@ -1,37 +1,41 @@
 import DeleteModal from './DeleteModal';
 import './EmployeesPage.css';
-import {useNavigate } from "react-router-dom";
-import { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react';
 import axios from 'axios';
+
+const baseURL = 'http://localhost:8080/api/employees';
+
+export async function loader() {
+    try {
+        await axios.get(`${baseURL}`);        
+    } catch (error) {
+        console.error(error);
+    }
+};
 
 function EmployeesPage () {
 
-    const baseURL = 'http://localhost:8080/api/employees';
+    const { employeesCharged } = useLoaderData();
+    
+    const [employees, setEmployees] = useState([]);
+    const [employee, setEmployee] = useState({});
 
-    const [showModal, setShowModal] = useState(false);
-
-    async function getEmployees() {
-        try {
-            const response = await axios.get(`${baseURL}`);
-            console.log('done', response);
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
-    useEffect(()=>{
-        console.log("inside useEffect")
-        getEmployees();
-    }, [])
+    const [showModal, setShowModal] = useState(false);    
     
     const navigate = useNavigate();
     function navigateToAddUpdatePage () {
         navigate("/addUpdateEmployee")
     }
 
-    function openDeleteModal () {
+    function openDeleteModal (id) {
+        setEmployee(id)
         setShowModal(!showModal);
     }
+
+    useEffect(()=> {
+        setEmployees(employeesCharged);
+    },[])
 
 
     return (
@@ -63,76 +67,38 @@ function EmployeesPage () {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th className='tableTitles'>
-                            1
-                        </th>
-                        <td className='tableValues'>
-                            James
-                        </td>
-                        <td className='tableValues'>
-                            Lopez
-                        </td>
-                        <td className='tableValues'>
-                            james@mail.com
-                        </td>
-                        <td className='tableValues actionsContainer'>
-                            <button className='actionButton updateButton' onClick={() => navigateToAddUpdatePage()}>
-                                Update
-                            </button>
-                            <button className='actionButton deleteButton' onClick={() => openDeleteModal()}>
-                                Delete
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th className='tableTitles'>
-                            2
-                        </th>
-                        <td className='tableValues'>
-                            Thierry
-                        </td>
-                        <td className='tableValues'>
-                            Ung
-                        </td>
-                        <td className='tableValues'>
-                            t.ung@mail.com
-                        </td>
-                        <td className='tableValues actionsContainer'>
-                        <button className='actionButton updateButton' onClick={() => navigateToAddUpdatePage()}>
-                                Update
-                            </button>
-                            <button className='actionButton deleteButton' onClick={() => navigateToDeletePage()}>
-                                Delete
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th className='tableTitles'>
-                            3
-                        </th>
-                        <td className='tableValues'>
-                            May
-                        </td>
-                        <td className='tableValues'>
-                            N'Soenzoc
-                        </td>
-                        <td className='tableValues'>
-                            May-NS@mail.com
-                        </td>
-                        <td className='tableValues actionsContainer'>
-                        <button className='actionButton updateButton' onClick={() => navigateToAddUpdatePage()}>
-                                Update
-                            </button>
-                            <button className='actionButton deleteButton' onClick={() => navigateToDeletePage()}>
-                                Delete
-                            </button>
-                        </td>
-                    </tr>   
+                    {
+                        employees.map((employee) => {
+                            return (
+                                <tr key= {employee.id}>
+                                    <th className='tableTitles'>
+                                        {employee.id}
+                                    </th>
+                                    <td className='tableValues'>
+                                        {employee.firstName}
+                                    </td>
+                                    <td className='tableValues'>
+                                        {employee.lastName}
+                                    </td>
+                                    <td className='tableValues'>
+                                        {employee.email}
+                                    </td>
+                                    <td className='tableValues actionsContainer'>
+                                        <button className='actionButton updateButton' onClick={() => navigateToAddUpdatePage()}>
+                                            Update
+                                        </button>
+                                        <button className='actionButton deleteButton' onClick={() => openDeleteModal(employee)}>
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>  
+                            )
+                        })
+                    }
                 </tbody>
             </table>
             {
-              showModal ? <DeleteModal></DeleteModal> : <div></div>
+              showModal ? <DeleteModal entity={employee} entities={employees} setEntities={setEmployees} setShowModal={setShowModal} label="employees"></DeleteModal> : <div></div>
             }            
         </div>
     )

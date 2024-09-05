@@ -9,10 +9,10 @@ import {
 } from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
 import ErrorPage from './Pages/ErrorPage';
-import EmployeesPage from './Pages/EmployeesPage';
+import EmployeesPage, { loader as employeesLoader } from './Pages/EmployeesPage';
 import AddUpdateDepartmentPage from './Pages/AddUpdateDepartment';
 import DepartmentsPage from './Pages/DepartmentsPage';
-import AddUpdateEmployeePage from './Pages/AddUpdateEmployeePage';
+import AddUpdateEmployeePage, {action as rootAction} from './Pages/AddUpdateEmployeePage';
 
 const router = createBrowserRouter([
   {
@@ -27,6 +27,7 @@ const router = createBrowserRouter([
       {
         path: "/employees",
         element: <EmployeesPage />,
+        loader: employeesLoader,
       },
       {
         path: "/departments",
@@ -35,6 +36,7 @@ const router = createBrowserRouter([
       {
         path: "/addUpdateEmployee",
         element: <AddUpdateEmployeePage />,
+        action: rootAction,
       },
       {
         path: "/addUpdateDepartment",
